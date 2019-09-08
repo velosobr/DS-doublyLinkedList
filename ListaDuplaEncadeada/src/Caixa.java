@@ -1,18 +1,22 @@
 public class Caixa {
 
-    Aluno aluno;
-    Caixa anterior;
-    Caixa proximo;
+    private Object elemento;
+    private Caixa anterior;
+    private Caixa proximo;
 
 
-    public Caixa(Aluno aluno) {
-        this.aluno = aluno;
-        this.anterior = null;
-        this.proximo = null;
+    public Caixa(Object elemento, Caixa anterior, Caixa proximo) {
+        this.elemento = elemento;
+        this.anterior = anterior;
+        this.proximo = proximo;
     }
 
-    public Aluno getAluno() {
-        return this.aluno;
+    public Caixa(Object elemento) {
+        this.elemento = elemento;
+    }
+
+    public Object getElemento() {
+        return this.elemento;
     }
 
     public Caixa getAnterior() {
