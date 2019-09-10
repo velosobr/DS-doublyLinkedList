@@ -1,47 +1,8 @@
+import java.util.ArrayList;
+
 public interface ListaDEncad {
 
 
-    //METODOS CURSOR
-
-
-    /**
-     * método que desloca o cursor para a primeira posição
-     */
-    private void vaParaPrimeiro() {
-
-    }
-
-    /**
-     * método que desloca o cursor para a ultima posição
-     */
-    private void vaParaUltimo() {
-
-    }
-
-    /**
-     * método que avança o cursor em N posições, de acordo com a qtd informada no parametro
-     *
-     * @param qtd - quantidade de posições para movimentação do cursos
-     */
-    private void avancaNPos(int qtd) {
-
-    }
-
-    /**
-     * método que retrocede o cursor em N posições, de acordo com a qtd informada no parametro
-     *
-     * @param qtd - quantidade de posições para movimentação do cursos
-     */
-    private void retrocedeNPos(int qtd) {
-
-    }
-
-    /**
-     * posiciona o cursor apontando p/ elemento encontrado
-     *
-     * @param ref - referencia para retorno
-     * @return - retorna o elemento buscado
-     */
     public boolean busca(int ref);
 
     /**
@@ -51,27 +12,29 @@ public interface ListaDEncad {
     /**
      *
      */
-    public void insereNaFrente();
+
+    public void insereNoComeco(String nome, int idade, String curso);
 
     /**
      *
      */
-    public void insereNoFim();
+    public void insereNoFim(String nome, int idade, String curso);
 
     /**
-     *
+     * insere após posição atual do cursor
      */
-    public void InsereAposAtual();
+    public void InsereAposAtual(String nome, int idade, String curso);
 
     /**
-     *
+     * Insere antes da atual posição do cursor
      */
-    public void insereAntesAtual();
+    public void insereAntesAtual(String nome, int idade, String curso);
 
     /**
+     * Insere o Objeto na posição informada por pos
      * @param pos
      */
-    public void insereNaPosicao(int pos);
+    public void insereNaPosicao(int pos, String nome, int idade, String curso);
 
     /**
      *

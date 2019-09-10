@@ -1,3 +1,5 @@
+import java.util.ArrayList;
+
 public class Aluno {
 
     private String nome;
@@ -11,6 +13,7 @@ public class Aluno {
     }
 
     public Aluno() {
+
     }
 
     public String getNome() {

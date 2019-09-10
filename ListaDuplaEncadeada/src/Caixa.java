@@ -15,6 +15,15 @@ public class Caixa {
         this.elemento = elemento;
     }
 
+    public Caixa() {
+
+    }
+
+    public Caixa(Caixa proximo, Object elemento) {
+        this.proximo = proximo;
+        this.elemento = elemento;
+    }
+
     public Object getElemento() {
         return this.elemento;
     }
