@@ -138,7 +138,8 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
 
     @Override
     public void excluiAtual() {
-
+    	Caixa temp = this.cursor;
+    	this.cursor = null;
     }
 
     @Override
@@ -171,14 +172,14 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
 
 
     private void vaParaPrimeiro() {
-
+    	this.cursor = this.comeco;
     }
 
     /**
      * método que desloca o cursor para a ultima posição
      */
     private void vaParaUltimo() {
-
+    	this.cursor = this.fim;
     }
 
     /**
@@ -187,7 +188,10 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
      * @param qtd - quantidade de posições para movimentação do cursos
      */
     private void avancaNPos(int qtd) {
-
+    	
+    	for(int i = 0; i<qtd; i++) {
+    		this.cursor = this.cursor.getProximo();
+    	}
     }
 
     /**
@@ -196,7 +200,10 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
      * @param qtd - quantidade de posições para movimentação do cursos
      */
     private void retrocedeNPos(int qtd) {
-
+    	
+    	for(int i = 0; i<qtd; i++) {
+    		this.cursor = this.cursor.getAnterior();
+    	}
     }
 
 }
