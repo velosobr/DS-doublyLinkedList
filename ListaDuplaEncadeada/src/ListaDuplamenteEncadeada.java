@@ -138,13 +138,18 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
 
     @Override
     public void excluiAtual() {
-    	Caixa temp = this.cursor;
-    	this.cursor = null;
+    	if(this.cursor == null) {
+    		throw new IllegalArgumentException("Posição não existe");
+    	}
+    	//this.cursor.getElemento() = null;
     }
 
     @Override
-    public void acessaAtual() {
-
+    public Object acessaAtual() {
+    	if(this.cursor == null) {
+    		throw new IllegalArgumentException("Posição não existe");
+    	}
+    	return this.cursor.getElemento();
     }
 
     private boolean posicaoOcupada(int posicao) {
@@ -172,6 +177,9 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
 
 
     private void vaParaPrimeiro() {
+    	if(this.cursor == null) {
+    		throw new IllegalArgumentException("Posição não existe");
+    	}
     	this.cursor = this.comeco;
     }
 
@@ -179,6 +187,9 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
      * método que desloca o cursor para a ultima posição
      */
     private void vaParaUltimo() {
+    	if(this.cursor == null) {
+    		throw new IllegalArgumentException("Posição não existe");
+    	}
     	this.cursor = this.fim;
     }
 
@@ -190,7 +201,11 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
     private void avancaNPos(int qtd) {
     	
     	for(int i = 0; i<qtd; i++) {
-    		this.cursor = this.cursor.getProximo();
+    		if(this.cursor.getProximo() != null) {
+    			this.cursor = this.cursor.getProximo();
+    		} else {
+    			throw new IllegalArgumentException("Posição não existe");
+    		}
     	}
     }
 
@@ -202,7 +217,11 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
     private void retrocedeNPos(int qtd) {
     	
     	for(int i = 0; i<qtd; i++) {
-    		this.cursor = this.cursor.getAnterior();
+    		if(this.cursor.getAnterior() != null) {
+    			this.cursor = this.cursor.getAnterior();
+    		} else {
+    			throw new IllegalArgumentException("Posição não existe");
+    		}
     	}
     }
 

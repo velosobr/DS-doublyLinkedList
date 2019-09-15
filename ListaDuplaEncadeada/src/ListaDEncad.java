@@ -53,8 +53,9 @@ public interface ListaDEncad {
     public void excluiAtual();
 
     /**
+     * @return 
      *
      */
-    public void acessaAtual();
+    public Object acessaAtual();
 
 }
