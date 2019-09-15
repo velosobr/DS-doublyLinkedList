@@ -141,7 +141,7 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
     	if(this.cursor == null) {
     		throw new IllegalArgumentException("Posição não existe");
     	}
-    	//this.cursor.getElemento() = null;
+    	this.cursor.setElemento(null);
     }
 
     @Override

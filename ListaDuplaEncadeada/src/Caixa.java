@@ -27,6 +27,10 @@ public class Caixa {
     public Object getElemento() {
         return this.elemento;
     }
+    
+    public void setElemento(Object elemento) {
+        this.elemento = elemento;
+    }
 
     public Caixa getAnterior() {
         return this.anterior;
