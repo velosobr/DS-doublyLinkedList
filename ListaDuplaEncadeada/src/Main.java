@@ -4,5 +4,7 @@ public class Main {
     	ListaDuplamenteEncadeada teste = new ListaDuplamenteEncadeada();
     	
     	teste.insereNoComeco("Bruno", 20, "Sistemas de éosguri");
+    	System.out.println(teste.acessaAtual());
+    	
     }
 }
