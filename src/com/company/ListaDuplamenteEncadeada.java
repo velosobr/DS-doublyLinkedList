@@ -1,29 +1,29 @@
+package com.company;
+
+import com.sun.media.sound.ModelStandardTransform;
+
 import java.awt.*;
 import java.util.ArrayList;
 
-public class ListaDuplamenteEncadeada implements ListaDEncad {
+public class ListaDuplamenteEncadeada<T> {
 
     private Caixa comeco;
     private Caixa fim;
     private Caixa cursor;
     private int contadorElem;
 
-    public ListaDuplamenteEncadeada() {
-        this.comeco = new Caixa();
-        this.fim = new Caixa();
-        this.cursor = comeco;
-
-    }
-
-    @Override
     public boolean busca(int ref) {
+        vaParaPrimeiro();
+        Aluno alunoBuscado = (Aluno) pegaCaixa(ref).getElemento();
+        if (alunoBuscado.getId() == ref)
+            return true;
+
         return false;
     }
 
-    @Override
-    public void insereNoComeco(String nome, int idade, String curso) {
-        Aluno aluno = new Aluno(nome, idade, curso);
-        Caixa caixaNova = new Caixa(aluno);
+    public void insereNoComeco(T elemento) {
+
+        Caixa caixaNova = new Caixa(elemento);
 
         if (comeco == null && fim == null) {
             this.comeco = caixaNova;
@@ -33,20 +33,19 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
             caixaNova.setProximo(comeco);
             comeco.setAnterior(caixaNova);
             this.comeco = caixaNova;
-            this.cursor = caixaNova;
+            this.cursor = caixaNova; //ACREDITO QUE DA PARA TIRAR A ATRIBUIÇÃO DO CURSOR DA AQUI DE COLOCAR ELE EM UM ESCOPO ACIMA
         }
         this.contadorElem++;
 
     }
 
-    @Override
-    public void insereNoFim(String nome, int idade, String curso) {
+
+    public void insereNoFim(T elemento) {
         //FIX ME verificando duas vezes
         if (comeco == null && fim == null) {
-            this.insereNoComeco(nome, idade, curso);
+            this.insereNoComeco(elemento);
         } else {
-            Aluno aluno = new Aluno(nome, idade, curso);
-            Caixa caixaNova = new Caixa(aluno);
+            Caixa caixaNova = new Caixa(elemento);
             caixaNova.setAnterior(fim);
             this.fim.setProximo(caixaNova);
             this.fim = caixaNova;
@@ -56,13 +55,12 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
 
     }
 
-    @Override
-    public void InsereAposAtual(String nome, int idade, String curso) {
+    public void InsereAposAtual(T elemento) {
         if (comeco == null && fim == null) {
-            this.insereNoComeco(nome, idade, curso);
+            this.insereNoComeco(elemento);
         } else {
-            Aluno aluno = new Aluno(nome, idade, curso);
-            Caixa caixaNova = new Caixa(aluno);
+
+            Caixa caixaNova = new Caixa(elemento);
             caixaNova.setAnterior(cursor);
             caixaNova.setProximo(cursor.getProximo());
             this.cursor.getProximo().setAnterior(caixaNova);
@@ -73,36 +71,33 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
     }
 
 
-    @Override
-    public void insereAntesAtual(String nome, int idade, String curso) {
+    public void insereAntesAtual(T elemento) {
         if (comeco == null && fim == null) {
-            this.insereNoComeco(nome, idade, curso);
+            this.insereNoComeco(elemento);
         } else {
-            Aluno aluno = new Aluno(nome, idade, curso);
-            Caixa caixaNova = new Caixa(aluno);
+            Caixa caixaNova = new Caixa(elemento);
 
-            caixaNova.setAnterior(cursor.getAnterior());
-            caixaNova.setProximo(cursor);
+            caixaNova.setAnterior(this.cursor.getAnterior());
+            caixaNova.setProximo(this.cursor);
             this.cursor.getAnterior().setProximo(caixaNova);
             this.cursor.setAnterior(caixaNova);
             this.cursor = caixaNova;
+            System.out.println("i");
             this.contadorElem++;
         }
 
     }
 
-    @Override
-    public void insereNaPosicao(int pos, String nome, int idade, String curso) {
+    public void insereNaPosicao(int pos, T elemento) {
         if (comeco == null && fim == null) {
-            this.insereNoComeco(nome, idade, curso);
+            this.insereNoComeco(elemento);
         } else if (pos == 0) {
-            this.insereNoComeco(nome, idade, curso);
+            this.insereNoComeco(elemento);
         } else if (pos == contadorElem) {
-            this.insereNoFim(nome, idade, curso);
+            this.insereNoFim(elemento);
         } else {
             Caixa caixaAux = pegaCaixa(pos - 1);
-            Aluno aluno = new Aluno(nome, idade, curso);
-            Caixa caixaNova = new Caixa(aluno);
+            Caixa caixaNova = new Caixa(elemento);
 
             caixaNova.setAnterior(caixaAux);
             caixaNova.setProximo(caixaAux.getProximo());
@@ -114,7 +109,6 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
         }
     }
 
-    @Override
     public void excluirPrimeiro() {
         if (!posicaoOcupada(0))
             throw new IllegalArgumentException("Posição não existe");
@@ -123,7 +117,6 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
         this.contadorElem--;
     }
 
-    @Override
     public void excluirUltimo() {
         if (!this.posicaoOcupada(this.contadorElem - 1)) {
             throw new IllegalArgumentException("Posição não existe");
@@ -136,20 +129,18 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
 
     }
 
-    @Override
     public void excluiAtual() {
-    	if(this.cursor == null) {
-    		throw new IllegalArgumentException("Posição não existe");
-    	}
-    	this.cursor.setElemento(null);
+        if (this.cursor == null) {
+            throw new IllegalArgumentException("Posição não existe");
+        }
+        this.cursor.setElemento(null);
     }
 
-    @Override
     public Object acessaAtual() {
-    	if(this.cursor == null) {
-    		throw new IllegalArgumentException("Posição não existe");
-    	}
-    	return this.cursor.getElemento();
+        if (this.cursor == null) {
+            throw new IllegalArgumentException("Posição não existe");
+        }
+        return this.cursor;
     }
 
     private boolean posicaoOcupada(int posicao) {
@@ -177,20 +168,20 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
 
 
     private void vaParaPrimeiro() {
-    	if(this.cursor == null) {
-    		throw new IllegalArgumentException("Posição não existe");
-    	}
-    	this.cursor = this.comeco;
+        if (this.cursor == null) {
+            throw new IllegalArgumentException("Posição não existe");
+        }
+        this.cursor = this.comeco;
     }
 
     /**
      * método que desloca o cursor para a ultima posição
      */
     private void vaParaUltimo() {
-    	if(this.cursor == null) {
-    		throw new IllegalArgumentException("Posição não existe");
-    	}
-    	this.cursor = this.fim;
+        if (this.cursor == null) {
+            throw new IllegalArgumentException("Posição não existe");
+        }
+        this.cursor = this.fim;
     }
 
     /**
@@ -199,14 +190,14 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
      * @param qtd - quantidade de posições para movimentação do cursos
      */
     private void avancaNPos(int qtd) {
-    	
-    	for(int i = 0; i<qtd; i++) {
-    		if(this.cursor.getProximo() != null) {
-    			this.cursor = this.cursor.getProximo();
-    		} else {
-    			throw new IllegalArgumentException("Posição não existe");
-    		}
-    	}
+
+        for (int i = 0; i < qtd; i++) {
+            if (this.cursor.getProximo() != null) {
+                this.cursor = this.cursor.getProximo();
+            } else {
+                throw new IllegalArgumentException("Posição não existe");
+            }
+        }
     }
 
     /**
@@ -215,14 +206,51 @@ public class ListaDuplamenteEncadeada implements ListaDEncad {
      * @param qtd - quantidade de posições para movimentação do cursos
      */
     private void retrocedeNPos(int qtd) {
-    	
-    	for(int i = 0; i<qtd; i++) {
-    		if(this.cursor.getAnterior() != null) {
-    			this.cursor = this.cursor.getAnterior();
-    		} else {
-    			throw new IllegalArgumentException("Posição não existe");
-    		}
-    	}
+
+        for (int i = 0; i < qtd; i++) {
+            if (this.cursor.getAnterior() != null) {
+                this.cursor = this.cursor.getAnterior();
+            } else {
+                throw new IllegalArgumentException("Posição não existe");
+            }
+        }
+    }
+
+    public void imprimeLista() {
+        vaParaPrimeiro();
+        Aluno aux = null;
+        StringBuilder mostraNaTela = new StringBuilder();
+        mostraNaTela.append("[");
+        while (this.cursor.getProximo() != null) {
+            aux = (Aluno) this.cursor.getElemento();//FIXME - não consigo não criar uma variavel aux;
+            mostraNaTela.append(aux.getNome());
+            mostraNaTela.append(", ");
+            this.cursor = this.cursor.getProximo();
+        }
+        aux = (Aluno) this.fim.getElemento();
+        mostraNaTela.append(aux.getNome());
+        mostraNaTela.append("]");
+        System.out.println(mostraNaTela);
+
+
+    }
+
+    public void imprimeLista(String message) {
+        vaParaPrimeiro();
+        Aluno aux = null;
+        StringBuilder mostraNaTela = new StringBuilder();
+        mostraNaTela.append("[");
+        while (this.cursor.getProximo() != null) {
+            aux = (Aluno) this.cursor.getElemento();//FIXME - não consigo não criar uma variavel aux;
+            mostraNaTela.append(aux.getNome());
+            mostraNaTela.append(", ");
+            this.cursor = this.cursor.getProximo();
+        }
+        aux = (Aluno) this.fim.getElemento();
+        mostraNaTela.append(aux.getNome());
+        mostraNaTela.append("]");
+        System.out.println(message + mostraNaTela);
+
     }
 
 }

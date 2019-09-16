@@ -1,17 +1,13 @@
-public class Caixa {
+package com.company;
 
-    private Object elemento;
+public class Caixa<T> {
+
+    private T elemento;
     private Caixa anterior;
     private Caixa proximo;
 
 
-    public Caixa(Object elemento, Caixa anterior, Caixa proximo) {
-        this.elemento = elemento;
-        this.anterior = anterior;
-        this.proximo = proximo;
-    }
-
-    public Caixa(Object elemento) {
+    public Caixa(T elemento) {
         this.elemento = elemento;
     }
 
@@ -19,16 +15,11 @@ public class Caixa {
 
     }
 
-    public Caixa(Caixa proximo, Object elemento) {
-        this.proximo = proximo;
-        this.elemento = elemento;
-    }
-
-    public Object getElemento() {
+    public T getElemento() {
         return this.elemento;
     }
     
-    public void setElemento(Object elemento) {
+    public void setElemento(T elemento) {
         this.elemento = elemento;
     }
 

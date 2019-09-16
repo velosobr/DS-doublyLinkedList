@@ -1,3 +1,5 @@
+package com.company;
+
 import java.util.ArrayList;
 
 public interface ListaDEncad {
@@ -13,7 +15,7 @@ public interface ListaDEncad {
      *
      */
 
-    public void insereNoComeco(String nome, int idade, String curso);
+    public void insereNoComeco(int id, String nome, int idade, String curso);
 
     /**
      *
