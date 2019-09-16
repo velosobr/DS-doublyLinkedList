@@ -7,23 +7,18 @@ import java.util.ArrayList;
 
 public class ListaDuplamenteEncadeada<T> {
 
-    private Caixa comeco;
-    private Caixa fim;
-    private Caixa cursor;
+    private Caixa<T> comeco;
+    private Caixa<T> fim;
+    private Caixa<T> cursor;
     private int contadorElem;
 
     public boolean busca(int ref) {
         vaParaPrimeiro();
-        Aluno alunoBuscado = (Aluno) pegaCaixa(ref).getElemento();
-        if (alunoBuscado.getId() == ref)
-            return true;
-
-        return false;
+        return pegaCaixa(ref).getElemento() != null;
     }
 
     public void insereNoComeco(T elemento) {
-
-        Caixa caixaNova = new Caixa(elemento);
+        Caixa<T> caixaNova = new Caixa<>(elemento);
 
         if (comeco == null && fim == null) {
             this.comeco = caixaNova;
@@ -45,7 +40,7 @@ public class ListaDuplamenteEncadeada<T> {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
         } else {
-            Caixa caixaNova = new Caixa(elemento);
+            Caixa<T> caixaNova = new Caixa<>(elemento);
             caixaNova.setAnterior(fim);
             this.fim.setProximo(caixaNova);
             this.fim = caixaNova;
@@ -58,11 +53,12 @@ public class ListaDuplamenteEncadeada<T> {
     public void InsereAposAtual(T elemento) {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
-        }if(this.cursor.getProximo()==null) {
+        }
+        if (this.cursor.getProximo() == null) {
             System.out.println("Caiu na condição de this.cursor.getProximo()==nu");
             this.insereNoFim(elemento);
-        }else {
-            Caixa caixaNova = new Caixa(elemento);
+        } else {
+            Caixa<T> caixaNova = new Caixa<>(elemento);
             caixaNova.setAnterior(cursor);
             caixaNova.setProximo(cursor.getProximo());
             this.cursor.getProximo().setAnterior(caixaNova);
@@ -76,11 +72,12 @@ public class ListaDuplamenteEncadeada<T> {
     public void insereAntesAtual(T elemento) {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
-        } if(this.cursor.getAnterior() == null){
+        }
+        if (this.cursor.getAnterior() == null) {
             this.insereNoComeco(elemento);
 
-        }else {
-            Caixa caixaNova = new Caixa(elemento);
+        } else {
+            Caixa<T> caixaNova = new Caixa<>(elemento);
 
             caixaNova.setAnterior(this.cursor.getAnterior());
             caixaNova.setProximo(this.cursor);
@@ -100,8 +97,8 @@ public class ListaDuplamenteEncadeada<T> {
         } else if (pos == contadorElem) {
             this.insereNoFim(elemento);
         } else {
-            Caixa caixaAux = pegaCaixa(pos - 1);
-            Caixa caixaNova = new Caixa(elemento);
+            Caixa<T> caixaAux = pegaCaixa(pos - 1);
+            Caixa<T> caixaNova = new Caixa<>(elemento);
 
             caixaNova.setAnterior(caixaAux);
             caixaNova.setProximo(caixaAux.getProximo());
@@ -151,12 +148,12 @@ public class ListaDuplamenteEncadeada<T> {
         return posicao >= 0 && posicao < this.contadorElem;
     }
 
-    private Caixa pegaCaixa(int posicao) {
+    private Caixa<T> pegaCaixa(int posicao) {
         if (!this.posicaoOcupada(posicao)) {
             throw new IllegalArgumentException("Posição não existe");
         }
 
-        Caixa atual = comeco;
+        Caixa<T> atual = comeco;
         for (int i = 0; i < posicao; i++) {
             atual = atual.getProximo();
         }
@@ -221,40 +218,21 @@ public class ListaDuplamenteEncadeada<T> {
     }
 
     public void imprimeLista() {
-        vaParaPrimeiro();
-        Aluno aux = null;
-        StringBuilder mostraNaTela = new StringBuilder();
-        mostraNaTela.append("[");
-        while (this.cursor.getProximo() != null) {
-            aux = (Aluno) this.cursor.getElemento();//FIXME - não consigo não criar uma variavel aux;
-            mostraNaTela.append(aux.getNome());
-            mostraNaTela.append(", ");
-            this.cursor = this.cursor.getProximo();
-        }
-        aux = (Aluno) this.fim.getElemento();
-        mostraNaTela.append(aux.getNome());
-        mostraNaTela.append("]");
-        System.out.println(mostraNaTela);
-
-
+        imprimeLista("");
     }
 
     public void imprimeLista(String message) {
         vaParaPrimeiro();
-        Aluno aux = null;
         StringBuilder mostraNaTela = new StringBuilder();
         mostraNaTela.append("[");
         while (this.cursor.getProximo() != null) {
-            aux = (Aluno) this.cursor.getElemento();//FIXME - não consigo não criar uma variavel aux;
-            mostraNaTela.append(aux.getNome());
+            mostraNaTela.append(this.cursor.getElemento().toString());
             mostraNaTela.append(", ");
             this.cursor = this.cursor.getProximo();
         }
-        aux = (Aluno) this.fim.getElemento();
-        mostraNaTela.append(aux.getNome());
+        mostraNaTela.append(this.fim.getElemento().toString());
         mostraNaTela.append("]");
         System.out.println(message + mostraNaTela);
-
     }
 
 }

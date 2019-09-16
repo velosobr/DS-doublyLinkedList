@@ -16,8 +16,7 @@ public class Main {
         Aluno aluno9 = new Aluno(9, "Vitor", 29, "Medicina");
         Aluno aluno10 = new Aluno(10, "Vinicius", 2, "Maternal");
 
-        ListaDuplamenteEncadeada alunos = new ListaDuplamenteEncadeada();
-
+        ListaDuplamenteEncadeada<Aluno> alunos = new ListaDuplamenteEncadeada<>();
 
         alunos.insereNoComeco(aluno1);
         alunos.imprimeLista("insereNoComeco: ");

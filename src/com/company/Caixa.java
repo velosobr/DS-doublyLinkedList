@@ -3,8 +3,8 @@ package com.company;
 public class Caixa<T> {
 
     private T elemento;
-    private Caixa anterior;
-    private Caixa proximo;
+    private Caixa<T> anterior;
+    private Caixa<T> proximo;
 
 
     public Caixa(T elemento) {
