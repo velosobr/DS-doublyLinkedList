@@ -20,20 +20,44 @@ public class Main {
 
 
         alunos.insereNoComeco(aluno1);
-        alunos.insereNoComeco(aluno2);
-        alunos.insereNaPosicao(1, aluno3);
-        alunos.insereNoFim(aluno4);
+        alunos.imprimeLista("insereNoComeco: ");
 
-        alunos.imprimeLista("Primeira lista");
+        alunos.insereNoComeco(aluno2);
+        alunos.imprimeLista("insereNoComeco: ");
+
+        alunos.insereNaPosicao(1, aluno3);
+        alunos.imprimeLista("insereNaPosicao: ");
+
+        alunos.insereNoFim(aluno4);
+        alunos.imprimeLista("insereNoFim: ");
+
         alunos.insereAntesAtual(aluno5);
+        alunos.imprimeLista("insereAntesAtual: ");
         alunos.excluirPrimeiro();
+        alunos.imprimeLista("excluirPrimeiro: ");
         alunos.insereNoFim(aluno6);
+        alunos.imprimeLista("insereNoFim: ");
         alunos.insereNoComeco(aluno7);
-        alunos.InsereAposAtual(aluno8);
+        alunos.imprimeLista("insereNoComeco: ");
+        alunos.insereNoFim(aluno8);
+        alunos.imprimeLista("insereNoFim: ");
         alunos.insereNoComeco(aluno9);
+        alunos.imprimeLista("insereNoComeco: ");
+        alunos.insereAntesAtual(aluno3);
+        alunos.imprimeLista("insereAntesAtual: ");
+        alunos.insereNoFim(aluno9);
+        alunos.imprimeLista("insereNoFim: ");
+
+        alunos.InsereAposAtual(aluno8);
+        alunos.imprimeLista("InsereAposAtual: ");
+        alunos.insereNoFim(aluno7);
+        alunos.imprimeLista("insereNoFim: ");
+        alunos.insereNoFim(aluno6);
+        alunos.imprimeLista("insereNoFim: ");
+        alunos.insereNoFim(aluno5);
         String x = alunos.busca(3) ? "existe": "Não existe";
         System.out.println("o elemento de id igual a 3 existe?"+ x);
-        alunos.imprimeLista();
+        alunos.imprimeLista("insereNoFim: ");
 
     }
 }

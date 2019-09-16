@@ -58,8 +58,10 @@ public class ListaDuplamenteEncadeada<T> {
     public void InsereAposAtual(T elemento) {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
-        } else {
-
+        }if(this.cursor.getProximo()==null) {
+            System.out.println("Caiu na condição de this.cursor.getProximo()==nu");
+            this.insereNoFim(elemento);
+        }else {
             Caixa caixaNova = new Caixa(elemento);
             caixaNova.setAnterior(cursor);
             caixaNova.setProximo(cursor.getProximo());
@@ -74,7 +76,10 @@ public class ListaDuplamenteEncadeada<T> {
     public void insereAntesAtual(T elemento) {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
-        } else {
+        } if(this.cursor.getAnterior() == null){
+            this.insereNoComeco(elemento);
+
+        }else {
             Caixa caixaNova = new Caixa(elemento);
 
             caixaNova.setAnterior(this.cursor.getAnterior());
@@ -82,7 +87,6 @@ public class ListaDuplamenteEncadeada<T> {
             this.cursor.getAnterior().setProximo(caixaNova);
             this.cursor.setAnterior(caixaNova);
             this.cursor = caixaNova;
-            System.out.println("i");
             this.contadorElem++;
         }
 
