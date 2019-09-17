@@ -1,8 +1,12 @@
 package com.company;
 
+import java.util.Scanner;
+
 public class Main {
 
-    public static void main(String[] args){
+    private static Scanner tecladoAluno = new Scanner(System.in);
+
+    public static void main(String[] args) {
 
         //Alunos
         Aluno aluno1 = new Aluno(1, "Lino", 26, "Sistemas");
@@ -19,44 +23,102 @@ public class Main {
         ListaDuplamenteEncadeada<Aluno> alunos = new ListaDuplamenteEncadeada<>();
 
         alunos.insereNoComeco(aluno1);
-        alunos.imprimeLista("insereNoComeco: ");
-
         alunos.insereNoComeco(aluno2);
-        alunos.imprimeLista("insereNoComeco: ");
-
         alunos.insereNaPosicao(1, aluno3);
-        alunos.imprimeLista("insereNaPosicao: ");
-
         alunos.insereNoFim(aluno4);
-        alunos.imprimeLista("insereNoFim: ");
-
         alunos.insereAntesAtual(aluno5);
-        alunos.imprimeLista("insereAntesAtual: ");
         alunos.excluirPrimeiro();
-        alunos.imprimeLista("excluirPrimeiro: ");
         alunos.insereNoFim(aluno6);
-        alunos.imprimeLista("insereNoFim: ");
         alunos.insereNoComeco(aluno7);
-        alunos.imprimeLista("insereNoComeco: ");
         alunos.insereNoFim(aluno8);
-        alunos.imprimeLista("insereNoFim: ");
         alunos.insereNoComeco(aluno9);
-        alunos.imprimeLista("insereNoComeco: ");
         alunos.insereAntesAtual(aluno3);
-        alunos.imprimeLista("insereAntesAtual: ");
         alunos.insereNoFim(aluno9);
-        alunos.imprimeLista("insereNoFim: ");
 
-        alunos.InsereAposAtual(aluno8);
-        alunos.imprimeLista("InsereAposAtual: ");
+        alunos.insereAposAtual(aluno8);
         alunos.insereNoFim(aluno7);
-        alunos.imprimeLista("insereNoFim: ");
         alunos.insereNoFim(aluno6);
-        alunos.imprimeLista("insereNoFim: ");
         alunos.insereNoFim(aluno5);
         String x = alunos.busca(3) ? "existe": "Não existe";
         System.out.println("o elemento de id igual a 3 existe?"+ x);
-        alunos.imprimeLista("insereNoFim: ");
+        Scanner teclado = new Scanner(System.in);
+
+
+        int opcao;
+        do {
+            System.out.println("---------Lista Duplamente Encadeada---------");
+            System.out.println("Opções: ");
+            System.out.println("1 - Insere no comeco");
+            System.out.println("2 - insere no fim");
+            System.out.println("3 - Insere apos atual");
+            System.out.println("4 - insere antes atual");
+            System.out.println("5 - Insere na posicao");
+            System.out.println("6 - Exclui primeiro");
+            System.out.println("7 - Exclui último");
+            System.out.println("8 - Exclui Atual");
+            System.out.println("9 - Acessa Atual");
+            System.out.println("10 - Mostra a Lista na tela");
+            System.out.println("---------------------------");
+
+            System.out.println("opcao: ");
+
+            opcao = teclado.nextInt();
+            teclado.nextLine();
+
+            switch (opcao) {
+                case (1):
+                    alunos.insereNoComeco(criaAluno());
+                    break;
+                case (2):
+                    alunos.insereNoFim(criaAluno());
+                    break;
+                case (3):
+                    alunos.insereAposAtual(criaAluno());
+                    break;
+                case (4):
+                    alunos.insereAntesAtual(criaAluno());
+                    break;
+                case (5):
+                    alunos.insereNaPosicao(perguntaPos(), criaAluno());
+                case (6):
+                    alunos.excluirPrimeiro();
+                    break;
+                case (7):
+                    alunos.excluirUltimo();
+                    break;
+                case (8):
+                    alunos.excluiAtual();
+                    break;
+                case (9):
+                    alunos.acessaAtual();
+                    break;
+                case (10):
+                    alunos.imprimeLista("Está é a lista: ");
+                    break;
+            }
+
+        } while (opcao != 0);
 
     }
+
+    private static int perguntaPos() {
+        System.out.println("---Qual posição você quer inserir?---");
+        return tecladoAluno.nextInt();
+    }
+
+    private static Aluno criaAluno() {
+        System.out.println("ID: ");
+        int id = tecladoAluno.nextInt();
+        tecladoAluno.nextLine();
+        System.out.println("Nome: ");
+        String nome = tecladoAluno.nextLine();
+        System.out.println("Idade: ");
+        int idade = tecladoAluno.nextInt();
+        tecladoAluno.nextLine();
+        System.out.println("Curso: ");
+        String curso = tecladoAluno.nextLine();
+
+        return new Aluno(id, nome, idade, curso);
+    }
 }
+

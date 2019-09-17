@@ -12,6 +12,10 @@ public class ListaDuplamenteEncadeada<T> {
     private Caixa<T> cursor;
     private int contadorElem;
 
+    {
+        System.out.println("Lista ja esta vazia");
+    }
+
     public boolean busca(int ref) {
         vaParaPrimeiro();
         return pegaCaixa(ref).getElemento() != null;
@@ -34,7 +38,6 @@ public class ListaDuplamenteEncadeada<T> {
 
     }
 
-
     public void insereNoFim(T elemento) {
         //FIX ME verificando duas vezes
         if (comeco == null && fim == null) {
@@ -50,7 +53,10 @@ public class ListaDuplamenteEncadeada<T> {
 
     }
 
-    public void InsereAposAtual(T elemento) {
+    /**
+     * insere após posição atual do cursor
+     */
+    public void insereAposAtual(T elemento) {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
         }
@@ -68,7 +74,9 @@ public class ListaDuplamenteEncadeada<T> {
         }
     }
 
-
+    /**
+     * Insere antes da atual posição do cursor
+     */
     public void insereAntesAtual(T elemento) {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
@@ -89,6 +97,12 @@ public class ListaDuplamenteEncadeada<T> {
 
     }
 
+    /**
+     * Insere o Objeto na posição informada por pos
+     *
+     * @param pos      - posicao na lista a ser inserida
+     * @param elemento - Elemento a ser inserido na lista
+     */
     public void insereNaPosicao(int pos, T elemento) {
         if (comeco == null && fim == null) {
             this.insereNoComeco(elemento);
@@ -110,44 +124,80 @@ public class ListaDuplamenteEncadeada<T> {
         }
     }
 
+    /**
+     * Exclui primeiro elemento da lista
+     */
     public void excluirPrimeiro() {
         if (!posicaoOcupada(0))
             throw new IllegalArgumentException("Posição não existe");
 
-        this.comeco = comeco.getProximo();
+        Caixa aux = comeco.getProximo();
+
+        aux.setAnterior(null);
+        comeco = aux;
+        this.cursor = comeco;
         this.contadorElem--;
     }
 
+    /**
+     * Exclui ultimo elemento da lista
+     */
     public void excluirUltimo() {
-        if (!this.posicaoOcupada(this.contadorElem - 1)) {
-            throw new IllegalArgumentException("Posição não existe");
+        if (contadorElem == 0) {
+            throw new IllegalArgumentException("Lista está vazia");
         } else {
-            Caixa caixaAux = this.fim.getAnterior();
-            caixaAux.setProximo(null);
-            this.fim = caixaAux;
+            Caixa aux = fim.getAnterior();
+            fim.setAnterior(null);
+            fim = aux;
+            aux.setProximo(null);
+
+            this.cursor = fim;
             this.contadorElem--;
         }
 
     }
 
+    /**
+     * Exclui atual elemento, onde o cursor está e move o cursor para o elemento anterior;
+     */
     public void excluiAtual() {
         if (this.cursor == null) {
             throw new IllegalArgumentException("Posição não existe");
         }
-        this.cursor.setElemento(null);
+        if (acessaAtual() == comeco) {
+            excluirPrimeiro();
+        } else if (acessaAtual() == fim) {
+            excluirUltimo();
+        } else {
+            Caixa temp = acessaAtual();
+            temp.getAnterior().setProximo(temp.getProximo());
+            temp.getProximo().setAnterior(temp.getAnterior());
+            this.cursor = temp.getAnterior();
+            temp.setAnterior(null);
+            temp.setProximo(null);
+            contadorElem--;
+        }
     }
 
-    public Object acessaAtual() {
-        if (this.cursor == null) {
-            throw new IllegalArgumentException("Posição não existe");
-        }
+
+    /**
+     * Retorna a caixa do elemento e mostra na tela um valor dos atributos do elemento.
+     */
+    public Caixa<T> acessaAtual() {
+        System.out.println("Este é o nome do elemento no cursor: " + this.cursor.getElemento().toString());
         return this.cursor;
     }
 
+    /**
+     * Metodo auxiliar que valida se a posição passada por parametro é valida.
+     */
     private boolean posicaoOcupada(int posicao) {
         return posicao >= 0 && posicao < this.contadorElem;
     }
 
+    /**
+     * metodo auxiliar que ajuda a retornar a caixa, atraves da posição passada
+     */
     private Caixa<T> pegaCaixa(int posicao) {
         if (!this.posicaoOcupada(posicao)) {
             throw new IllegalArgumentException("Posição não existe");
@@ -224,15 +274,21 @@ public class ListaDuplamenteEncadeada<T> {
     public void imprimeLista(String message) {
         vaParaPrimeiro();
         StringBuilder mostraNaTela = new StringBuilder();
-        mostraNaTela.append("[");
-        while (this.cursor.getProximo() != null) {
-            mostraNaTela.append(this.cursor.getElemento().toString());
-            mostraNaTela.append(", ");
-            this.cursor = this.cursor.getProximo();
+        try {
+            mostraNaTela.append("[");
+            while (this.cursor.getProximo() != null) {
+                mostraNaTela.append(this.cursor.getElemento().toString());
+                mostraNaTela.append(", ");
+                this.cursor = this.cursor.getProximo();
+            }
+            mostraNaTela.append(this.fim.getElemento().toString());
+            mostraNaTela.append("]");
+            System.out.println(message + mostraNaTela);
+        } catch (NullPointerException e) {
+
+            System.out.println("Foi tentado acessar informação nula");
         }
-        mostraNaTela.append(this.fim.getElemento().toString());
-        mostraNaTela.append("]");
-        System.out.println(message + mostraNaTela);
+
     }
 
 }
